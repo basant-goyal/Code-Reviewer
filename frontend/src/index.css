@@ -1,0 +1,102 @@
+/*
+ * index.css — Global Styles & Design System
+ * ==========================================
+ * WHY THIS FILE EXISTS:
+ *   Tailwind resets browser defaults and provides utility classes.
+ *   This file adds the 3 things Tailwind can't do on its own:
+ *   1. @import the Tailwind layers.
+ *   2. Smooth dark/light transitions so the theme toggle doesn't flash.
+ *   3. Custom scrollbar styling for a polished look.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base transitions ─────────────────────────────────────────────────────── */
+/* Every element gets a smooth color transition so dark/light toggle looks pro */
+@layer base {
+  * {
+    @apply transition-colors duration-200;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+}
+
+/* ── Custom scrollbar (Webkit) ────────────────────────────────────────────── */
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 dark:bg-slate-700 rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400 dark:bg-slate-600;
+  }
+}
+
+/* ── Shimmer animation for loading skeletons ─────────────────────────────── */
+@layer utilities {
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(148, 163, 184, 0.1) 25%,
+      rgba(148, 163, 184, 0.2) 50%,
+      rgba(148, 163, 184, 0.1) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .dark .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(51, 65, 85, 0.5) 25%,
+      rgba(71, 85, 105, 0.7) 50%,
+      rgba(51, 65, 85, 0.5) 75%
+    );
+    background-size: 200% 100%;
+  }
+}
+
+/* ── Glass card effect ────────────────────────────────────────────────────── */
+@layer components {
+  .glass-card {
+    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm
+           border border-slate-200/60 dark:border-slate-700/60
+           rounded-2xl shadow-sm;
+  }
+
+  .btn-primary {
+    @apply bg-brand-600 hover:bg-brand-700 active:bg-brand-800
+           text-white font-semibold px-6 py-3 rounded-xl
+           transition-all duration-200 shadow-md hover:shadow-lg
+           disabled:opacity-50 disabled:cursor-not-allowed
+           disabled:hover:bg-brand-600 disabled:hover:shadow-md;
+  }
+
+  .btn-ghost {
+    @apply text-slate-600 dark:text-slate-400
+           hover:bg-slate-100 dark:hover:bg-slate-800
+           rounded-lg px-3 py-2 transition-all duration-200;
+  }
+}
